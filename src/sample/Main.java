@@ -1,20 +1,16 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -95,7 +91,8 @@ public class Main extends Application {
         // ----
 
         MapGrid mapGrid = new MapGrid();
-        grid.add(mapGrid.getCanvas(), 9, 1, 1, 10);
+        // Canvas disabled for now until improvements are done
+        // grid.add(mapGrid.getCanvas(), 9, 1, 1, 10);
 
         // ---
 
@@ -186,6 +183,7 @@ public class Main extends Application {
         rightButton.setOnAction(e -> controller.right());
 
         Button gasButton = new Button();
+        gasButton.setId("gasButton");
         Image gasImage = new Image("sample/emoji/fuel-pump-twitter.png");
         ImageView gasView = new ImageView(gasImage);
         gasView.setFitHeight(30);
@@ -194,6 +192,7 @@ public class Main extends Application {
         gasButton.setOnAction(e -> controller.gasStation());
 
         Button flowerButton = new Button();
+        flowerButton.setId("flowerButton");
         Image flowerImage = new Image("sample/emoji/blossom-twitter.png");
         ImageView flowerView = new ImageView(flowerImage);
         flowerView.setFitHeight(30);
@@ -202,6 +201,7 @@ public class Main extends Application {
         flowerButton.setOnAction(e -> controller.flower());
 
         Button ballroomButton = new Button();
+        ballroomButton.setId("ballroomButton");
         Image ballroomImage = new Image("sample/emoji/woman-dancing-twitter.png");
         ImageView ballroomView = new ImageView(ballroomImage);
         ballroomView.setFitHeight(30);
@@ -210,6 +210,7 @@ public class Main extends Application {
         ballroomButton.setOnAction(e -> controller.ballroom());
 
         Button coffeeButton = new Button();
+        coffeeButton.setId("coffeeButton");
         Image coffeeImage = new Image("sample/emoji/hot-beverage-twitter.png");
         ImageView coffeeView = new ImageView(coffeeImage);
         coffeeView.setFitHeight(30);
@@ -218,6 +219,7 @@ public class Main extends Application {
         coffeeButton.setOnAction(e -> controller.coffee());
 
         Button juiceButton = new Button();
+        juiceButton.setId("juiceButton");
         Image juiceImage = new Image("sample/emoji/beverage-box-twitter.png");
         ImageView juiceView = new ImageView(juiceImage);
         juiceView.setFitHeight(30);
@@ -226,6 +228,7 @@ public class Main extends Application {
         juiceButton.setOnAction(e -> controller.juice());
 
         Button theaterButton = new Button();
+        theaterButton.setId("theaterButton");
         Image theaterImage = new Image("sample/emoji/performing-arts-twitter.png");
         ImageView theaterView = new ImageView(theaterImage);
         theaterView.setFitHeight(30);
@@ -234,6 +237,7 @@ public class Main extends Application {
         theaterButton.setOnAction(e -> controller.theater());
 
         Button spaghettButton = new Button();
+        spaghettButton.setId("spaghettButton");
         Image spaghettiImage = new Image("sample/emoji/spaghetti-twitter.png");
         ImageView spaghettiView = new ImageView(spaghettiImage);
         spaghettiView.setFitHeight(30);
@@ -242,6 +246,7 @@ public class Main extends Application {
         spaghettButton.setOnAction(e -> controller.spaghett());
 
         Button tacoButton = new Button();
+        tacoButton.setId("tacoButton");
         Image tacoImage = new Image("sample/emoji/taco-twitter.png");
         ImageView tacoView = new ImageView(tacoImage);
         tacoView.setFitHeight(30);
@@ -250,6 +255,7 @@ public class Main extends Application {
         tacoButton.setOnAction(e -> controller.taco());
 
         Button cocktailButton = new Button();
+        cocktailButton.setId("cocktailButton");
         Image cocktailImage = new Image("sample/emoji/tropical-drink-twitter.png");
         ImageView cocktailView = new ImageView(cocktailImage);
         cocktailView.setFitHeight(30);
@@ -258,6 +264,7 @@ public class Main extends Application {
         cocktailButton.setOnAction(e -> controller.cocktail());
 
         Button fairButton = new Button();
+        fairButton.setId("fairButton");
         Image fairImage = new Image("sample/emoji/ferris-wheel-twitter.png");
         ImageView fairView = new ImageView(fairImage);
         fairView.setFitHeight(30);
@@ -266,6 +273,7 @@ public class Main extends Application {
         fairButton.setOnAction(e -> controller.fair());
 
         Button sandwichButton = new Button();
+        sandwichButton.setId("sandwichButton");
         Image sandwichImage = new Image("sample/emoji/sandwich-twitter.png");
         ImageView sandwichView = new ImageView(sandwichImage);
         sandwichView.setFitHeight(30);
@@ -274,6 +282,7 @@ public class Main extends Application {
         sandwichButton.setOnAction(e -> controller.sandwich());
 
         Button airportButton = new Button();
+        airportButton.setId("airportButton");
         Image airportImage = new Image("sample/emoji/airplane-twitter.png");
         ImageView airportView = new ImageView(airportImage);
         airportView.setFitHeight(30);
@@ -312,6 +321,14 @@ public class Main extends Application {
         refreshView.setFitWidth(30);
         refreshButton.setGraphic(refreshView);
         refreshButton.setOnAction(e -> controller.clear());
+
+        Button backButton = new Button();
+        Image backImage = new Image("sample/emoji/back-arrow-twitter.png");
+        ImageView backView = new ImageView(backImage);
+        backView.setFitHeight(30);
+        backView.setFitWidth(30);
+        backButton.setGraphic(backView);
+        backButton.setOnAction(e -> controller.revertStep());
         
         grid.add(spaghettButton, 0, 1);
         grid.add(tacoButton, 0, 2);
@@ -336,7 +353,8 @@ public class Main extends Application {
         grid.add(leftButton, 0, 8);
         grid.add(rightButton, 2, 8);
 
-        grid.add(refreshButton, 1, 10);
+        grid.add(refreshButton, 0, 10);
+        grid.add(backButton, 2, 10);
 
         /*
         ------------------- Primary Stage final settings -------------------

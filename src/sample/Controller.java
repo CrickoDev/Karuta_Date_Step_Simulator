@@ -1,10 +1,11 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.paint.Color;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Controller {
 
@@ -13,6 +14,10 @@ public class Controller {
     private int drink;
     private int entertainment;
     private int time;
+
+    private int count;
+
+    private Map<Button, Integer> buttonMap = new HashMap<>();
 
     ListView<String> moveListView;
     ListView<String> gasListView;
@@ -115,6 +120,8 @@ public class Controller {
 
         moveListView.getItems().add("Flower");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#flowerButton"));
     }
 
     public void ballroom() {
@@ -125,6 +132,8 @@ public class Controller {
 
         moveListView.getItems().add("Ballroom");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#ballroomButton"));
     }
 
     public void coffee() {
@@ -133,6 +142,8 @@ public class Controller {
 
         moveListView.getItems().add("Coffee");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#coffeeButton"));
     }
 
     public void juice() {
@@ -141,6 +152,8 @@ public class Controller {
 
         moveListView.getItems().add("Juice");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#juiceButton"));
     }
 
     public void theater() {
@@ -149,6 +162,8 @@ public class Controller {
 
         moveListView.getItems().add("Theater");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#theaterButton"));
     }
 
     public void spaghett() {
@@ -157,6 +172,8 @@ public class Controller {
 
         moveListView.getItems().add("Spaghett");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#spaghettButton"));
     }
 
     public void taco() {
@@ -165,6 +182,8 @@ public class Controller {
 
         moveListView.getItems().add("Taco");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#tacoButton"));
     }
 
     public void cocktail() {
@@ -174,6 +193,8 @@ public class Controller {
 
         moveListView.getItems().add("Cocktail");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#cocktailButton"));
     }
 
     public void fair() {
@@ -184,6 +205,8 @@ public class Controller {
 
         moveListView.getItems().add("Fair");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#fairButton"));
     }
 
     public void sandwich() {
@@ -193,6 +216,8 @@ public class Controller {
 
         moveListView.getItems().add("Sandwich");
         updateLists();
+
+        addButtonToMap((Button) scene.lookup("#sandwichButton"));
     }
 
     public void airport() {
@@ -201,6 +226,8 @@ public class Controller {
 
         moveListView.getItems().add("Airport");
         updateLists();
+
+        resetMap();
     }
 
     public void home() {
@@ -255,31 +282,48 @@ public class Controller {
         entertainmentListView.getItems().add(String.valueOf(entertainment));
         timeListView.getItems().add(String.valueOf(time));
 
+        count++;
+
+        mapCountDown();
+
         validate();
     }
 
     private void validate() {
+        if (food <= 0) {
+            foodListView.setStyle("-fx-background-color: red;");
+        }
+        else {
+            foodListView.setStyle("");
+        }
+        if (drink <= 0) {
+            drinkListView.setStyle("-fx-background-color: red;");
+        }
+        else {
+            drinkListView.setStyle("");
+        }
+        if (entertainment <= 0) {
+            entertainmentListView.setStyle("-fx-background-color: red;");
+        }
+        else {
+            entertainmentListView.setStyle("");
+        }
+        if (gas <= 0) {
+            gasListView.setStyle("-fx-background-color: red;");
+        }
+        else {
+            gasListView.setStyle("");
+        }
+
         if (food <= 0 || drink <= 0 || entertainment <= 0 || gas <= 0) {
-            if (food <= 0) {
-                foodListView.setStyle("-fx-background-color: red; -fx-border-width: 3px;");
-            }
-            if (drink <= 0) {
-                drinkListView.setStyle("-fx-background-color: red; -fx-border-width: 3px;");
-            }
-            if (entertainment <= 0) {
-                entertainmentListView.setStyle("-fx-background-color: red; -fx-border-width: 3px;");
-            }
-            if (gas <= 0) {
-                gasListView.setStyle("-fx-background-color: red; -fx-border-width: 3px;");
-            }
             return;
         }
         if (time == 0) {
-            gasListView.setStyle("-fx-background-color: green; -fx-border-width: 3px;");
-            drinkListView.setStyle("-fx-background-color: green; -fx-border-width: 3px;");
-            foodListView.setStyle("-fx-background-color: green; -fx-border-width: 3px;");
-            entertainmentListView.setStyle("-fx-background-color: green; -fx-border-width: 3px;");
-            timeListView.setStyle("-fx-background-color: green; -fx-border-width: 3px;");
+            gasListView.setStyle("-fx-background-color: green;");
+            drinkListView.setStyle("-fx-background-color: green;");
+            foodListView.setStyle("-fx-background-color: green;");
+            entertainmentListView.setStyle("-fx-background-color: green;");
+            timeListView.setStyle("-fx-background-color: green;");
         }
     }
 
@@ -303,9 +347,60 @@ public class Controller {
         entertainment = 75;
         time = 100;
 
+        count = 0;
+
         mapGrid.drawBase();
+
+        buttonMap.clear();
 
         moveListView.getItems().add("--- Start ---");
         updateLists();
+    }
+
+    public void revertStep() {
+        count--;
+
+        gas = Integer.parseInt(gasListView.getItems().get(count-1));
+        food = Integer.parseInt(foodListView.getItems().get(count-1));
+        drink = Integer.parseInt(drinkListView.getItems().get(count-1));
+        entertainment = Integer.parseInt(entertainmentListView.getItems().get(count-1));
+        time = Integer.parseInt(timeListView.getItems().get(count-1));
+
+        moveListView.getItems().remove(count);
+        gasListView.getItems().remove(count);
+        foodListView.getItems().remove(count);
+        drinkListView.getItems().remove(count);
+        entertainmentListView.getItems().remove(count);
+        timeListView.getItems().remove(count);
+
+        mapCountUp();
+
+        validate();
+    }
+
+    private void addButtonToMap(Button button) {
+        button.setDisable(true);
+        buttonMap.put(button, 10);
+    }
+
+    private void mapCountDown() {
+        for (Map.Entry<Button, Integer> entry : buttonMap.entrySet()) {
+            entry.setValue(entry.getValue() - 1);
+            entry.getKey().setDisable(entry.getValue() > 0 && entry.getValue() <= 10);
+        }
+    }
+
+    private void mapCountUp() {
+        for (Map.Entry<Button, Integer> entry : buttonMap.entrySet()) {
+            entry.setValue(entry.getValue() + 1);
+            entry.getKey().setDisable(entry.getValue() > 0 && entry.getValue() <= 10);
+        }
+    }
+
+    private void resetMap() {
+        for (Map.Entry<Button, Integer> entry : buttonMap.entrySet()) {
+            entry.setValue(0);
+            entry.getKey().setDisable(false);
+        }
     }
 }
