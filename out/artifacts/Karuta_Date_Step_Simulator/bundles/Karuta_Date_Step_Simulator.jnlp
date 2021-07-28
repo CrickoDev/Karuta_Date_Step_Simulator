@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Karuta_Date_Step_Simulator.jnlp">
+  <information>
+    <title>Karuta Date Step Simulator</title>
+    <vendor>Unknown</vendor>
+    <description>Karuta Date Step Simulator</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Karuta_Date_Step_Simulator.jar" size="117235" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="sample.Main"  name="Karuta Date Step Simulator" />
+  <update check="background"/>
+</jnlp>

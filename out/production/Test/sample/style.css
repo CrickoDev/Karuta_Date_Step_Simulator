@@ -1,0 +1,7 @@
+.list-cell {
+	-fx-alignment: center;
+}
+
+.list-view {
+    -fx-font-weight: bold;
+}
