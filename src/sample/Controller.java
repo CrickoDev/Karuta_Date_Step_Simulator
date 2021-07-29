@@ -15,7 +15,7 @@ public class Controller {
     private int entertainment;
     private int time;
 
-    private int count;
+    private int count = 0;
 
     private Map<Button, Integer> buttonMap = new HashMap<>();
 
@@ -121,7 +121,7 @@ public class Controller {
         moveListView.getItems().add("Flower");
         updateLists();
 
-        addButtonToMap((Button) scene.lookup("#flowerButton"));
+        deactivateFlower();
     }
 
     public void ballroom() {
@@ -351,13 +351,14 @@ public class Controller {
 
         mapGrid.drawBase();
 
-        buttonMap.clear();
+        resetMap();
 
         moveListView.getItems().add("--- Start ---");
         updateLists();
     }
 
     public void revertStep() {
+        if (count == 1) return;
         count--;
 
         gas = Integer.parseInt(gasListView.getItems().get(count-1));
@@ -365,6 +366,10 @@ public class Controller {
         drink = Integer.parseInt(drinkListView.getItems().get(count-1));
         entertainment = Integer.parseInt(entertainmentListView.getItems().get(count-1));
         time = Integer.parseInt(timeListView.getItems().get(count-1));
+
+        if (moveListView.getItems().get(count).equals("Flower")) {
+            reactivateFlower();
+        }
 
         moveListView.getItems().remove(count);
         gasListView.getItems().remove(count);
@@ -394,13 +399,25 @@ public class Controller {
         for (Map.Entry<Button, Integer> entry : buttonMap.entrySet()) {
             entry.setValue(entry.getValue() + 1);
             entry.getKey().setDisable(entry.getValue() > 0 && entry.getValue() <= 10);
+            if (entry.getValue() > 10) {
+                buttonMap.remove(entry.getKey());
+            }
         }
     }
 
     private void resetMap() {
         for (Map.Entry<Button, Integer> entry : buttonMap.entrySet()) {
-            entry.setValue(0);
             entry.getKey().setDisable(false);
         }
+        buttonMap.clear();
+        if (scene != null) reactivateFlower();
+    }
+
+    public void deactivateFlower() {
+        scene.lookup("#flowerButton").setDisable(true);
+    }
+
+    public void reactivateFlower() {
+        scene.lookup("#flowerButton").setDisable(false);
     }
 }
